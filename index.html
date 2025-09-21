@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas des Rêves | Explorez l'univers onirique interactif</title>
+    <meta name="description"
+        content="Plongez dans l'Atlas des Rêves, une expérience 3D immersive où chaque étoile raconte un rêve. Explorez, découvrez et partagez vos propres rêves dans ce cosmos interactif unique.">
+    <meta name="author" content="Atlas des Rêves">
+    <meta name="keywords" content="rêves, 3D, interactif, étoiles, cosmos, partage, expérience immersive">
+
+    <!-- Chargement de Three.js avec une version compatible -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <!-- Chargement d'OrbitControls depuis le bon répertoire -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-title">
+                <div class="header-icon">✨</div>
+                <h1 id="headerTitle">Atlas des Rêves</h1>
+            </div>
+            <div class="header-actions">
+                <div class="language-selector">
+                    <button id="languageBtn" class="language-btn">
+                        <span id="currentLanguage">FR</span>
+                        <span>▼</span>
+                    </button>
+                    <div id="languageDropdown" class="language-dropdown">
+                        <div class="language-option" data-lang="fr">Français</div>
+                        <div class="language-option" data-lang="en">English</div>
+                        <div class="language-option" data-lang="de">Deutsch</div>
+                    </div>
+                </div>
+                <button id="addDreamBtn" class="add-dream-btn">
+                    <span class="plus-icon">+</span>
+                    <span id="addDreamText">Ajouter mon rêve</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main 3D Canvas -->
+    <main class="main-content">
+        <div id="loadingScreen" class="loading-screen">
+            <div class="loading-card">
+                <div class="loading-icon"></div>
+                <h2 id="loadingTitle">Initialisation de l'Atlas</h2>
+                <p id="loadingText">Préparation de votre voyage à travers les rêves...</p>
+            </div>
+        </div>
+        <div id="canvasContainer" class="canvas-container"></div>
+    </main>
+
+    <!-- Instructions - Déplaçables -->
+    <div class="instructions" id="instructionsPanel">
+        <div class="instructions-header">
+            <h3 id="instructionsTitle">🌟 Navigation</h3>
+            <button class="instructions-toggle" id="instructionsToggle">−</button>
+        </div>
+        <div class="instructions-content" id="instructionsContent">
+            <ul>
+                <li><strong id="instruction1">Clic gauche + glisser :</strong> <span id="instruction1Desc">Faire pivoter la vue</span></li>
+                <li><strong id="instruction2">Molette :</strong> <span id="instruction2Desc">Zoomer/dézoomer</span></li>
+                <li><strong id="instruction3">Clic droit + glisser :</strong> <span id="instruction3Desc">Déplacer la vue</span></li>
+                <li><strong id="instruction4">Clic sur une étoile :</strong> <span id="instruction4Desc">Découvrir un rêve</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Bouton de réinitialisation de la vue -->
+    <button id="resetViewBtn" class="reset-view-btn">
+        <span>🔭</span>
+        <span id="resetViewText">Réinitialiser la vue</span>
+    </button>
+
+    <!-- Dream Popup -->
+    <div id="dreamPopup" class="dream-popup hidden">
+        <div class="dream-popup-content">
+            <div class="dream-popup-header">
+                <div class="dream-star">
+                    <span class="star-icon">⭐</span>
+                    <span id="dreamId" class="dream-id">Rêve #1</span>
+                </div>
+                <button id="closeDreamBtn" class="close-btn">×</button>
+            </div>
+            <div class="dream-content">
+                <blockquote id="dreamText" class="dream-text">
+                    "Le contenu du rêve apparaîtra ici..."
+                </blockquote>
+                <div class="dream-author">
+                    <span class="author-icon">👤</span>
+                    <span id="dreamAuthor" class="author-name">— Auteur</span>
+                </div>
+            </div>
+            <div class="dream-popup-footer">
+                <button id="closeDreamFooterBtn" class="close-dream-btn">
+                    <span id="closeDreamText">Fermer ce rêve</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dream Form -->
+    <div id="dreamForm" class="dream-form hidden">
+        <div class="dream-form-content">
+            <div class="dream-form-header">
+                <h2 id="dreamFormTitle">✨ Partagez votre rêve</h2>
+                <button id="closeDreamFormBtn" class="close-btn">×</button>
+            </div>
+            <form id="dreamSubmissionForm" class="dream-form-body">
+                <div class="form-group">
+                    <label for="dreamInput" id="dreamLabel">Votre rêve</label>
+                    <textarea id="dreamInput" name="dream" placeholder="Décrivez votre rêve en quelques phrases..."
+                        required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="authorInput" id="authorLabel">Votre nom (optionnel)</label>
+                    <input type="text" id="authorInput" name="author" placeholder="Votre pseudonyme">
+                </div>
+                <button type="submit" class="submit-btn">
+                    <span id="submitDreamText">🌟 Envoyer mon rêve vers les étoiles</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Message - Repositionné -->
+    <div id="successMessage" class="success-message hidden">
+        <div class="success-content">
+            <div class="success-icon">🌟</div>
+            <h3 id="successTitle">Rêve envoyé !</h3>
+            <p id="successText">Votre rêve voyage maintenant vers les étoiles...</p>
+        </div>
+    </div>
+
+    <!-- Tutorial Overlay avec mise en évidence et ombre découpée -->
+    <div id="tutorialOverlay" class="tutorial-overlay hidden">
+        <div id="tutorialSpotlight" class="tutorial-spotlight hidden"></div>
+        <div id="tutorialHighlight" class="tutorial-highlight hidden"></div>
+        <div id="tutorialCard" class="tutorial-card">
+            <div class="tutorial-header">
+                <h2 id="tutorialTitle">Bienvenue sur l'Atlas des Rêves</h2>
+            </div>
+            <div class="tutorial-content">
+                <p id="tutorialDescription">Explorez un univers interactif où chaque étoile représente un rêve partagé par nos visiteurs. Naviguez, découvrez et partagez vos propres rêves.</p>
+            </div>
+            <div class="tutorial-footer">
+                <div class="tutorial-pagination">
+                    <span id="tutorialPage">1/4</span>
+                </div>
+                <div class="tutorial-buttons">
+                    <button id="skipTutorialBtn" class="tutorial-btn skip">
+                        <span id="skipTutorialText">Passer</span>
+                    </button>
+                    <button id="nextTutorialBtn" class="tutorial-btn next">
+                        <span id="nextTutorialText">Suivant</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

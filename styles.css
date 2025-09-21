@@ -1,0 +1,866 @@
+/* Atlas des Rêves - Design System Cosmique */
+:root {
+    /* Couleurs cosmiques */
+    --cosmic-deep: hsl(220, 25%, 6%);
+    --cosmic-medium: hsl(220, 30%, 10%);
+    --cosmic-light: hsl(220, 15%, 25%);
+    --stellar-gold: hsl(45, 100%, 75%);
+    --stellar-silver: hsl(210, 15%, 85%);
+    --dream-purple: hsl(280, 100%, 80%);
+    --dream-blue: hsl(250, 100%, 70%);
+    --nebula-pink: hsl(320, 70%, 75%);
+    --foreground: hsl(0, 0%, 98%);
+    --muted-foreground: hsl(220, 10%, 65%);
+
+    /* Gradients cosmiques */
+    --gradient-cosmic: linear-gradient(135deg, hsl(220, 25%, 6%) 0%, hsl(250, 30%, 10%) 50%, hsl(280, 20%, 8%) 100%);
+    --gradient-stellar: linear-gradient(45deg, hsl(45, 100%, 75%) 0%, hsl(60, 100%, 85%) 100%);
+    --gradient-nebula: linear-gradient(135deg, hsl(250, 100%, 70%) 0%, hsl(280, 100%, 80%) 50%, hsl(320, 70%, 75%) 100%);
+
+    /* Ombres cosmiques */
+    --shadow-star: 0 0 20px hsla(45, 100%, 75%, 0.3);
+    --shadow-glow: 0 0 30px hsla(250, 100%, 70%, 0.2);
+    --shadow-deep: 0 10px 40px hsla(220, 25%, 2%, 0.8);
+
+    /* Animations */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-star: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--gradient-cosmic);
+    color: var(--foreground);
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* Header */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background: rgba(34, 40, 49, 0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--cosmic-light);
+    padding: 1rem 2rem;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.header-icon {
+    font-size: 1.5rem;
+    animation: twinkle 3s ease-in-out infinite;
+}
+
+.header-title h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: var(--gradient-stellar);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.language-selector {
+    position: relative;
+}
+
+.language-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--foreground);
+    border: 1px solid var(--cosmic-light);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.language-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.language-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    background: rgba(34, 40, 49, 0.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--cosmic-light);
+    border-radius: 8px;
+    padding: 0.5rem;
+    min-width: 120px;
+    display: none;
+    z-index: 100;
+}
+
+.language-dropdown.show {
+    display: block;
+}
+
+.language-option {
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.language-option:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.add-dream-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--gradient-nebula);
+    color: var(--cosmic-deep);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-glow);
+}
+
+.add-dream-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.plus-icon {
+    font-size: 1.2rem;
+}
+
+/* Main Content */
+.main-content {
+    height: 100vh;
+    padding-top: 80px;
+    position: relative;
+}
+
+.canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+}
+
+/* Loading Screen */
+.loading-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gradient-cosmic);
+    z-index: 10;
+}
+
+.loading-card {
+    background: rgba(34, 40, 49, 0.9);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--cosmic-light);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: var(--shadow-glow);
+}
+
+.loading-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 1rem;
+    background: var(--gradient-stellar);
+    border-radius: 50%;
+    animation: cosmic-glow 4s ease-in-out infinite;
+}
+
+.loading-card h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.loading-card p {
+    color: var(--muted-foreground);
+}
+
+/* Instructions - Déplaçables */
+.instructions {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 40;
+    background: rgba(34, 40, 49, 0.9);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--cosmic-light);
+    border-radius: 12px;
+    padding: 1rem;
+    min-width: 280px;
+    box-shadow: var(--shadow-deep);
+    cursor: move;
+    user-select: none;
+}
+
+.instructions.dragging {
+    opacity: 0.8;
+    z-index: 1000;
+}
+
+.instructions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    cursor: move;
+}
+
+.instructions-toggle {
+    background: none;
+    border: none;
+    color: var(--muted-foreground);
+    cursor: pointer;
+    font-size: 0.875rem;
+    padding: 0.25rem;
+    border-radius: 4px;
+    transition: var(--transition-smooth);
+}
+
+.instructions-toggle:hover {
+    color: var(--foreground);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.instructions-content {
+    transition: var(--transition-smooth);
+}
+
+.instructions-content.collapsed {
+    display: none;
+}
+
+.instructions h3 {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    color: var(--stellar-gold);
+}
+
+.instructions ul {
+    list-style: none;
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+}
+
+.instructions li {
+    margin-bottom: 0.5rem;
+}
+
+.instructions strong {
+    color: var(--foreground);
+}
+
+/* Bouton de réinitialisation */
+.reset-view-btn {
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    z-index: 40;
+    background: rgba(34, 40, 49, 0.9);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--cosmic-light);
+    color: var(--foreground);
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-deep);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.reset-view-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+/* Dream Popup */
+.dream-popup {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(34, 40, 49, 0.8);
+    backdrop-filter: blur(8px);
+}
+
+.dream-popup-content {
+    max-width: 32rem;
+    width: 100%;
+    background: rgba(34, 40, 49, 0.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--cosmic-light);
+    border-radius: 16px;
+    box-shadow: var(--shadow-glow);
+    animation: scale-in 0.3s ease-out;
+}
+
+.dream-popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1.5rem 0;
+}
+
+.dream-star {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.star-icon {
+    animation: twinkle 3s ease-in-out infinite;
+}
+
+.dream-id {
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: var(--muted-foreground);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: var(--transition-smooth);
+}
+
+.close-btn:hover {
+    color: var(--foreground);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.dream-content {
+    padding: 1.5rem;
+}
+
+.dream-text {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    font-style: italic;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.dream-author {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+}
+
+.dream-popup-footer {
+    padding: 0 1.5rem 1.5rem;
+    border-top: 1px solid var(--cosmic-light);
+    margin-top: 1rem;
+    padding-top: 1rem;
+}
+
+.close-dream-btn {
+    width: 100%;
+    background: var(--gradient-nebula);
+    color: var(--cosmic-deep);
+    border: none;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.close-dream-btn:hover {
+    opacity: 0.9;
+}
+
+/* Dream Form */
+.dream-form {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(34, 40, 49, 0.8);
+    backdrop-filter: blur(8px);
+}
+
+.dream-form-content {
+    max-width: 32rem;
+    width: 100%;
+    background: rgba(34, 40, 49, 0.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--cosmic-light);
+    border-radius: 16px;
+    box-shadow: var(--shadow-glow);
+    animation: scale-in 0.3s ease-out;
+}
+
+.dream-form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--cosmic-light);
+}
+
+.dream-form-header h2 {
+    font-size: 1.25rem;
+    background: var(--gradient-stellar);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.dream-form-body {
+    padding: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--foreground);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--cosmic-light);
+    border-radius: 8px;
+    padding: 0.75rem;
+    color: var(--foreground);
+    font-family: inherit;
+    transition: var(--transition-smooth);
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--dream-blue);
+    box-shadow: 0 0 0 2px rgba(138, 43, 226, 0.2);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--muted-foreground);
+}
+
+.submit-btn {
+    width: 100%;
+    background: var(--gradient-stellar);
+    color: var(--cosmic-deep);
+    border: none;
+    padding: 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-star);
+}
+
+.submit-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+/* Success Message - Repositionné en bas à droite */
+.success-message {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 60;
+    background: rgba(34, 40, 49, 0.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--cosmic-light);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: var(--shadow-glow);
+    animation: slide-in-right 0.3s ease-out;
+    min-width: 280px;
+    max-width: 350px;
+}
+
+.success-icon {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+    animation: twinkle 3s ease-in-out infinite;
+}
+
+.success-content h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: var(--stellar-gold);
+}
+
+.success-content p {
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+}
+
+/* Tutorial avec mise en évidence et ombre découpée */
+.tutorial-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
+    /* Utilisation de box-shadow pour créer l'effet d'ombre découpée */
+    background: rgba(0, 0, 0, 0.8);
+    pointer-events: none;
+    /* Empêche l'overlay de bloquer les clics */
+}
+
+.tutorial-spotlight {
+    position: fixed;
+    pointer-events: none;
+    z-index: 101;
+    background: transparent;
+    border-radius: 12px;
+    /* Effet de découpe avec box-shadow */
+    box-shadow:
+        0 0 0 9999px rgba(0, 0, 0, 0.8),
+        0 0 20px var(--stellar-gold);
+    transition: all 0.3s ease;
+}
+
+.tutorial-highlight {
+    position: fixed;
+    pointer-events: none;
+    z-index: 102;
+    border: 3px solid var(--stellar-gold);
+    border-radius: 12px;
+    animation: tutorial-pulse 2s ease-in-out infinite;
+    transition: all 0.3s ease;
+}
+
+.tutorial-card {
+    background: rgba(34, 40, 49, 0.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--cosmic-light);
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: var(--shadow-glow);
+    position: relative;
+    animation: tutorial-slide-in 0.4s ease-out;
+    z-index: 103;
+    pointer-events: auto;
+    /* Permet l'interaction avec la carte */
+}
+
+@keyframes tutorial-pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 20px var(--stellar-gold);
+        border-color: var(--stellar-gold);
+    }
+
+    50% {
+        box-shadow: 0 0 30px var(--stellar-gold), 0 0 40px rgba(255, 215, 0, 0.5);
+        border-color: rgba(255, 215, 0, 0.8);
+    }
+}
+
+@keyframes tutorial-slide-in {
+    0% {
+        transform: translateY(-20px) scale(0.95);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Positionnement dynamique du tutoriel */
+.tutorial-card.positioned-top {
+    position: absolute;
+    top: 120px;
+}
+
+.tutorial-card.positioned-bottom {
+    position: absolute;
+    bottom: 120px;
+}
+
+.tutorial-card.positioned-left {
+    position: absolute;
+    left: 50px;
+}
+
+.tutorial-card.positioned-right {
+    position: absolute;
+    right: 50px;
+}
+
+.tutorial-header {
+    margin-bottom: 1.5rem;
+}
+
+.tutorial-header h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    background: var(--gradient-stellar);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.tutorial-content {
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.tutorial-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tutorial-pagination {
+    font-size: 0.9rem;
+    color: var(--muted-foreground);
+}
+
+.tutorial-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.tutorial-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    position: relative;
+    z-index: 105;
+}
+
+.tutorial-btn.skip {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--cosmic-light);
+    color: var(--foreground);
+}
+
+.tutorial-btn.next {
+    background: var(--gradient-nebula);
+    border: none;
+    color: var(--cosmic-deep);
+    font-weight: 600;
+}
+
+.tutorial-btn:hover {
+    opacity: 0.9;
+}
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
+
+/* Animations */
+@keyframes twinkle {
+
+    0%,
+    100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+}
+
+@keyframes cosmic-glow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 20px hsla(45, 100%, 75%, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 30px hsla(45, 100%, 75%, 0.6);
+    }
+}
+
+@keyframes scale-in {
+    0% {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes slide-in-right {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes star-rise {
+    0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes particle-float {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(180deg);
+    }
+}
+
+.star-rising {
+    animation: star-rise 2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header {
+        padding: 1rem;
+    }
+
+    .header-content {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .header-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .instructions {
+        bottom: 0.5rem;
+        right: 0.5rem;
+        left: 0.5rem;
+        min-width: auto;
+    }
+
+    .reset-view-btn {
+        bottom: 5rem;
+        left: 0.5rem;
+        right: 0.5rem;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .success-message {
+        bottom: 0.5rem;
+        right: 0.5rem;
+        left: 0.5rem;
+        min-width: auto;
+        max-width: none;
+    }
+
+    .dream-popup,
+    .dream-form {
+        padding: 0.5rem;
+    }
+
+    .tutorial-card {
+        padding: 1.5rem;
+    }
+}
