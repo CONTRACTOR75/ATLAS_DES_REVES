@@ -575,9 +575,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    backdrop-filter: blur(2px);
+    
     /* Utilisation de box-shadow pour créer l'effet d'ombre découpée */
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0);
     pointer-events: none;
     /* Empêche l'overlay de bloquer les clics */
 }
@@ -589,9 +589,7 @@ body {
     background: transparent;
     border-radius: 12px;
     /* Effet de découpe avec box-shadow */
-    box-shadow:
-        0 0 0 9999px rgba(0, 0, 0, 0.8),
-        0 0 20px var(--stellar-gold);
+    
     transition: all 0.3s ease;
 }
 
@@ -832,15 +830,28 @@ body {
         justify-content: space-between;
     }
 
+    .language-selector {
+        position: relative; /* Assure que le dropdown se positionne par rapport à son parent */
+    }
+
+    .language-dropdown {
+        /* On remplace right: 0; par left: auto; et on ajuste le right */
+        right: 0; /* Alignement par défaut à droite */
+        left: auto;
+        /* Ajout d'une petite marge pour ne pas coller au bord */
+        margin-right: 0.5rem; 
+    }
+
     .instructions {
         bottom: 0.5rem;
         right: 0.5rem;
         left: 0.5rem;
         min-width: auto;
+        margin-bottom: 3rem;
     }
 
     .reset-view-btn {
-        bottom: 5rem;
+        bottom: 0.5rem;
         left: 0.5rem;
         right: 0.5rem;
         text-align: center;
@@ -863,4 +874,9 @@ body {
     .tutorial-card {
         padding: 1.5rem;
     }
+}
+.button-disabled-during-tutorial {
+    pointer-events: none !important;
+    opacity: 0.5 !important;
+    filter: grayscale(0.5);
 }

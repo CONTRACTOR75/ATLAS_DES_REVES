@@ -1,229 +1,5 @@
 // Atlas des Rêves - Main Script
 
-// Language data (externalized)
-const labels = {
-    fr: {
-        headerTitle: "Atlas des Rêves",
-        addDreamText: "Ajouter mon rêve",
-        loadingTitle: "Initialisation de l'Atlas",
-        loadingText: "Préparation de votre voyage à travers les rêves...",
-        instructionsTitle: "🌟 Navigation",
-        instruction1: "Clic gauche + glisser :",
-        instruction1Desc: "Faire pivoter la vue",
-        instruction2: "Molette :",
-        instruction2Desc: "Zoomer/dézoomer",
-        instruction3: "Clic droit + glisser :",
-        instruction3Desc: "Déplacer la vue",
-        instruction4: "Clic sur une étoile :",
-        instruction4Desc: "Découvrir un rêve",
-        dreamFormTitle: "✨ Partagez votre rêve",
-        dreamLabel: "Votre rêve",
-        authorLabel: "Votre nom (optionnel)",
-        submitDreamText: "🌟 Envoyer mon rêve vers les étoiles",
-        successTitle: "Rêve envoyé !",
-        successText: "Votre rêve voyage maintenant vers les étoiles...",
-        closeDreamText: "Fermer ce rêve",
-        tutorialTitle: "Bienvenue sur l'Atlas des Rêves",
-        tutorialDescription: "Explorez un univers interactif où chaque étoile représente un rêve partagé par nos visiteurs. Naviguez, découvrez et partagez vos propres rêves.",
-        skipTutorialText: "Passer",
-        nextTutorialText: "Suivant",
-        tutorialStep2Title: "Ajouter un rêve",
-        tutorialStep2Desc: "Cliquez sur le bouton 'Ajouter mon rêve' pour partager votre propre rêve avec la communauté.",
-        tutorialStep3Title: "Changer de langue",
-        tutorialStep3Desc: "Utilisez ce bouton pour changer la langue de l'application selon vos préférences.",
-        tutorialStep4Title: "Navigation",
-        tutorialStep4Desc: "Utilisez ces commandes pour naviguer dans l'univers des rêves et découvrir les étoiles.",
-        finishTutorialText: "Terminer",
-        anonymous: "Anonyme",
-        dreamId: "Rêve",
-        resetViewText: "Réinitialiser la vue"
-    },
-    en: {
-        headerTitle: "Dream Atlas",
-        addDreamText: "Add my dream",
-        loadingTitle: "Atlas Initialization",
-        loadingText: "Preparing your journey through dreams...",
-        instructionsTitle: "🌟 Navigation",
-        instruction1: "Left click + drag:",
-        instruction1Desc: "Rotate view",
-        instruction2: "Mouse wheel:",
-        instruction2Desc: "Zoom in/out",
-        instruction3: "Right click + drag:",
-        instruction3Desc: "Pan view",
-        instruction4: "Click on a star:",
-        instruction4Desc: "Discover a dream",
-        dreamFormTitle: "✨ Share your dream",
-        dreamLabel: "Your dream",
-        authorLabel: "Your name (optional)",
-        submitDreamText: "🌟 Send my dream to the stars",
-        successTitle: "Dream sent!",
-        successText: "Your dream is now traveling to the stars...",
-        closeDreamText: "Close this dream",
-        tutorialTitle: "Welcome to the Dream Atlas",
-        tutorialDescription: "Explore an interactive universe where each star represents a dream shared by our visitors. Navigate, discover and share your own dreams.",
-        skipTutorialText: "Skip",
-        nextTutorialText: "Next",
-        tutorialStep2Title: "Add a dream",
-        tutorialStep2Desc: "Click on the 'Add my dream' button to share your own dream with the community.",
-        tutorialStep3Title: "Change language",
-        tutorialStep3Desc: "Use this button to change the application language according to your preferences.",
-        tutorialStep4Title: "Navigation",
-        tutorialStep4Desc: "Use these commands to navigate through the dream universe and discover the stars.",
-        finishTutorialText: "Finish",
-        anonymous: "Anonymous",
-        dreamId: "Dream",
-        resetViewText: "Reset view"
-    },
-    de: {
-        headerTitle: "Traum Atlas",
-        addDreamText: "Meinen Traum hinzufügen",
-        loadingTitle: "Atlas Initialisierung",
-        loadingText: "Bereite deine Reise durch die Träume vor...",
-        instructionsTitle: "🌟 Navigation",
-        instruction1: "Linksklick + ziehen:",
-        instruction1Desc: "Ansicht drehen",
-        instruction2: "Mausrad:",
-        instruction2Desc: "Vergrößern/Verkleinern",
-        instruction3: "Rechtsklick + ziehen:",
-        instruction3Desc: "Ansicht verschieben",
-        instruction4: "Auf einen Stern klicken:",
-        instruction4Desc: "Entdecke einen Traum",
-        dreamFormTitle: "✨ Teile deinen Traum",
-        dreamLabel: "Dein Traum",
-        authorLabel: "Dein Name (optional)",
-        submitDreamText: "🌟 Sende meinen Traum zu den Sternen",
-        successTitle: "Traum gesendet!",
-        successText: "Dein Traum reist jetzt zu den Sternen...",
-        closeDreamText: "Diesen Traum schließen",
-        tutorialTitle: "Willkommen beim Traum Atlas",
-        tutorialDescription: "Erkunde ein interaktives Universum, in dem jeder Stern einen von unseren Besuchern geteilten Traum repräsentiert. Navigiere, entdecke und teile deine eigenen Träume.",
-        skipTutorialText: "Überspringen",
-        nextTutorialText: "Weiter",
-        tutorialStep2Title: "Traum hinzufügen",
-        tutorialStep2Desc: "Klicke auf den 'Meinen Traum hinzufügen' Button, um deinen eigenen Traum mit der Community zu teilen.",
-        tutorialStep3Title: "Sprache ändern",
-        tutorialStep3Desc: "Verwende diesen Button, um die Sprache der Anwendung nach deinen Vorlieben zu ändern.",
-        tutorialStep4Title: "Navigation",
-        tutorialStep4Desc: "Verwende diese Befehle, um durch das Traum-Universum zu navigieren und die Sterne zu entdecken.",
-        finishTutorialText: "Beenden",
-        anonymous: "Anonym",
-        dreamId: "Traum",
-        resetViewText: "Ansicht zurücksetzen"
-    }
-};
-
-// Dreams data
-const dreamsData = [
-    {
-        id: 1,
-        dream: "Je rêve d'un monde où les arbres parlent et partagent leurs secrets millénaires.",
-        author: "Luna",
-        x: 2,
-        y: 3,
-        z: -1,
-        color: "#FFD700"
-    },
-    {
-        id: 2,
-        dream: "Dans mon rêve, je vole au-dessus des nuages avec des ailes de papillon iridescentes.",
-        author: "Morphée",
-        x: -3,
-        y: 2,
-        z: 4,
-        color: "#9370DB"
-    },
-    {
-        id: 3,
-        dream: "Je rêve d'une bibliothèque infinie où chaque livre contient un univers différent.",
-        author: "Onirique",
-        x: 1,
-        y: -2,
-        z: 3,
-        color: "#00CED1"
-    },
-    {
-        id: 4,
-        dream: "Mon rêve est de danser avec les étoiles dans un ballet cosmique éternel.",
-        author: "Céleste",
-        x: -2,
-        y: 4,
-        z: -2,
-        color: "#FF69B4"
-    },
-    {
-        id: 5,
-        dream: "Je rêve d'un océan de lumière où nagent des créatures faites de pure énergie.",
-        author: "Lumineux",
-        x: 4,
-        y: -1,
-        z: 2,
-        color: "#20B2AA"
-    },
-    {
-        id: 6,
-        dream: "Dans mon rêve, chaque note de musique devient une couleur visible qui peint le ciel.",
-        author: "Synesthète",
-        x: -1,
-        y: 3,
-        z: -3,
-        color: "#FFB347"
-    },
-    {
-        id: 7,
-        dream: "Je rêve de jardins suspendus dans l'espace où poussent des fleurs de cristal.",
-        author: "Astral",
-        x: 3,
-        y: -3,
-        z: 1,
-        color: "#E6E6FA"
-    },
-    {
-        id: 8,
-        dream: "Mon rêve est de pouvoir parler avec les animaux et comprendre leurs sagesses anciennes.",
-        author: "Druide",
-        x: -4,
-        y: 1,
-        z: -1,
-        color: "#32CD32"
-    },
-    {
-        id: 9,
-        dream: "Je rêve d'un monde où les émotions prennent forme et dansent autour de nous.",
-        author: "Empathique",
-        x: 2,
-        y: -4,
-        z: 3,
-        color: "#FF6347"
-    },
-    {
-        id: 10,
-        dream: "Dans mon rêve, je voyage à travers le temps dans une machine faite de pensées pures.",
-        author: "Temporel",
-        x: 0,
-        y: 0,
-        z: 5,
-        color: "#4169E1"
-    },
-    {
-        id: 11,
-        dream: "Je rêve d'une forêt enchantée où chaque feuille raconte une histoire différente.",
-        author: "Conteur",
-        x: -3,
-        y: -2,
-        z: 2,
-        color: "#8FBC8F"
-    },
-    {
-        id: 12,
-        dream: "Mon rêve est de créer des aurores boréales avec mes mains et de les offrir au monde.",
-        author: "Artiste",
-        x: 1,
-        y: 5,
-        z: -4,
-        color: "#00FFFF"
-    }
-];
-
 // Global variables
 let scene, camera, renderer, controls;
 let dreamStars = [];
@@ -238,6 +14,264 @@ let isInitialized = false;
 // Variables pour le déplacement des instructions
 let isDragging = false;
 let dragOffset = { x: 0, y: 0 };
+
+
+//_________________________SUPABASE INTEGRATION______________________________
+// --- CONFIGURATION SUPABASE ---
+const SUPABASE_URL = 'https://adtoywryjsxykkzphspq.supabase.co'; // Ex: https://abcdefghijklmn.supabase.co
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFkdG95d3J5anN4eWtrenBoc3BxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMDczNzIsImV4cCI6MjA3NDY4MzM3Mn0.wqJ-vqjQWUoY9GTa_tTpJsWKv2nLLQF5v9kO-uxnsio'; // Ex: eyJhbGc...
+const supabase = window.supabase; // On l'initialise plus tard
+// --- FIN CONFIGURATION SUPABASE ---
+
+// --- [Clean Architecture] COUCHE SERVICE DE STOCKAGE ---
+
+/**
+ * Interface/Abstraction pour le stockage des rêves.
+ * Tous les services concrets doivent implémenter ces méthodes.
+ * Elles sont toutes asynchrones pour préparer l'intégration Supabase.
+ */
+class DreamStorageService {
+    async getDreams() {
+        throw new Error("La méthode 'getDreams()' doit être implémentée.");
+    }
+
+    async saveDream(dreamData) {
+        throw new Error("La méthode 'saveDream()' doit être implémentée.");
+    }
+
+    async clearAllDreams() {
+        throw new Error("La méthode 'clearAllDreams()' doit être implémentée.");
+    }
+}
+
+/**
+ * Implémentation concrète utilisant localStorage (pour maintenir la logique actuelle).
+ * Ceci simule l'asynchronisme d'une requête API.
+ */
+class LocalDreamStorageService extends DreamStorageService {
+    constructor(storageKey = 'dreams') {
+        super();
+        this.storageKey = storageKey;
+    }
+
+    async getDreams() {
+        // Retourne une Promise pour simuler une requête API (préparation à Supabase)
+        return new Promise(resolve => {
+            const dreamsJson = localStorage.getItem(this.storageKey);
+            const dreams = dreamsJson ? JSON.parse(dreamsJson) : [];
+            resolve(dreams);
+        });
+    }
+
+    async saveDream(dreamData) {
+        return new Promise(async resolve => {
+            const dreams = await this.getDreams();
+            dreams.push(dreamData);
+            localStorage.setItem(this.storageKey, JSON.stringify(dreams));
+            // Simule la réponse d'un service externe
+            resolve({ data: dreamData, success: true });
+        });
+    }
+
+    async clearAllDreams() {
+        return new Promise(resolve => {
+            localStorage.removeItem(this.storageKey);
+            resolve({ success: true });
+        });
+    }
+}
+/**
+ * Implémentation concrète utilisant Supabase pour la persistance des données.
+ * Ceci remplace LocalDreamStorageService une fois que le client est configuré.
+ */
+class SupabaseDreamStorageService extends DreamStorageService {
+    constructor(url, anonKey, tableName = 'dreams') {
+        super();
+        this.supabase = supabase.createClient(url, anonKey);
+        this.tableName = tableName;
+    }
+
+    async getDreams() {
+        console.log("Fetching dreams from Supabase...");
+
+        // Assure-toi que ces noms de colonnes sont exacts dans ta table Supabase !
+        const { data, error } = await this.supabase
+            .from(this.tableName)
+            .select('id, dream_text, author_name, pos_x, pos_y, pos_z, star_color'); // <-- VÉRIFIE LES NOMS ICI
+
+        if (error) {
+            console.error('Supabase fetch error:', error);
+            return [];
+        }
+
+        // MAPPING CRUCIAL : Transformation du format DB vers le format App
+        const mappedDreams = data.map(dbDream => ({
+            id: dbDream.id,
+            text: dbDream.dream_text,
+            author: dbDream.author_name,
+
+            // C'est la LIGNE LA PLUS IMPORTANTE :
+            color: dbDream.star_color, // La colonne DB star_color doit être mappée vers la propriété App 'color'
+
+            position: {
+                x: dbDream.pos_x,
+                y: dbDream.pos_y,
+                z: dbDream.pos_z,
+            }
+        }));
+
+        return mappedDreams;
+    }
+
+    async saveDream(dreamData) {
+        console.log("saveDream called !")
+        console.log("Saving dream to Supabase...");
+        console.log("Dream data to s:", dreamData);
+        console.log("Dream color to send:", dreamData.color);
+
+        // 1. Transformation du format de ton application vers le format Supabase
+        const dbFormat = {
+            dream_text: dreamData.text,
+            author_name: dreamData.author,
+            pos_x: dreamData.position.x,
+            pos_y: dreamData.position.y,
+            pos_z: dreamData.position.z,
+            star_color: dreamData.color,
+        };
+
+        // 2. Insertion dans la table
+        const { data, error } = await this.supabase
+            .from(this.tableName)
+            .insert([dbFormat])
+            .select(); // On demande l'objet inséré en retour
+
+        if (error) {
+            console.error("Supabase insert error:", error);
+            throw new Error(`Erreur d'enregistrement du rêve : ${error.message}`);
+        }
+
+        // On peut retourner les données insérées si besoin
+        return data ? data[0] : null;
+    }
+
+    // Le clearing n'est généralement pas permis en production sur une base publique, 
+    // mais on maintient la fonction pour l'interface :
+    async clearAllDreams() {
+        // Attention : Supabase RLS devrait empêcher cette opération pour un utilisateur public !
+        // Pour des raisons de sécurité, cette fonction devrait être réservée à un admin.
+        // Pour l'instant, on la laisse vide ou on renvoie une erreur si tu la laisses publique.
+        console.warn("La fonction 'clearAllDreams' est désactivée pour des raisons de sécurité Supabase.");
+        return { success: false, message: "Opération non autorisée." };
+    }
+}
+// ----------------------------------------------------
+// INSTANCIATION : C'EST LA SEULE LIGNE À CHANGER POUR PASSER À SUPABASE !
+// ----------------------------------------------------
+// Utilise le stockage local pour le moment
+// NOUVELLE VERSION :
+const dreamStorageService = new SupabaseDreamStorageService(SUPABASE_URL, SUPABASE_ANON_KEY, 'dreams');
+
+
+/**
+ * @TODO: Une fois Supabase configuré, tu remplaceras la ligne ci-dessus par :
+ * const dreamStorageService = new SupabaseDreamStorageService(); 
+ * (après avoir créé cette nouvelle classe d'implémentation, bien sûr !)
+ */
+
+// --- FIN: COUCHE SERVICE DE STOCKAGE ---
+// Remplace l'ancienne implémentation
+async function addDreamToAtlas(dreamText, authorName) {
+    // ... (Le code existant pour générer la position, la couleur, etc. reste ici) ...
+    // NOTE : Assure-toi que la variable 'dream' utilisée ci-dessous contient bien
+    // toutes les données nécessaires (position, texte, auteur, etc.).
+
+    // Exemple d'objet de rêve (à adapter selon ta structure actuelle)
+    const dream = {
+        text: dreamText,
+        author: authorName || labels[currentLanguage].anonymous,
+
+        x: (Math.random() - 0.5) * 8, // Génération de la position
+        y: (Math.random() - 0.5) * 8,
+        z: (Math.random() - 0.5) * 8,
+
+        color: getRandomColor() // Génération de la couleur
+    };
+
+    try {
+        const dreamForSupabase = {
+            text: dream.text,
+            author: dream.author,
+            position: {
+                x: dream.x,
+                y: dream.y,
+                z: dream.z
+            },
+            color: dream.color
+        };
+
+        await dreamStorageService.saveDream(dreamForSupabase);
+
+        // Si l'enregistrement est un succès, continuer la logique THREE.js
+        createDreamStar(dream, true);
+        displaySuccessMessage();
+
+    } catch (error) {
+        // En cas d'erreur de connexion ou d'enregistrement
+        console.error("Erreur lors de l'enregistrement du rêve:", error);
+        // Tu peux ajouter ici une logique pour notifier l'utilisateur de l'échec
+    }
+}
+// Remplace l'ancienne implémentation
+async function loadDreams() {
+    try {
+        // !!! MODIFICATION CLÉ !!! : Utilisation du service asynchrone
+        const dreams = await dreamStorageService.getDreams();
+
+        // Le reste de ta logique de chargement reste intact.
+        dreams.forEach(dream => {
+            //createNewDreamStar(dream);
+            const flatDream = {
+                id: dream.id,
+                dream: dream.text,  // Attention: createDreamStar utilise "dream", pas "text"
+                author: dream.author,
+                x: dream.position.x,
+                y: dream.position.y,
+                z: dream.position.z,
+                color: dream.color
+            };
+            createDreamStar(flatDream);
+        });
+
+    } catch (error) {
+        console.error("Erreur lors du chargement des rêves:", error);
+    }
+}
+// Si tu as une fonction 'clearDreams' ou 'resetDreams' :
+async function clearDreams() {
+    try {
+        await dreamStorageService.clearAllDreams();
+        // ... (Logique existante pour supprimer les étoiles de la scène THREE.js) ...
+    } catch (error) {
+        console.error("Erreur lors de la suppression des rêves:", error);
+    }
+}
+// DANS script.js (Ajoute ceci quelque part où elle sera globale)
+function displaySuccessMessage() {
+    const successOverlay = document.getElementById('successOverlay');
+    if (successOverlay) {
+        successOverlay.classList.remove('hidden');
+
+        // Optionnel : masquer après quelques secondes
+        setTimeout(() => {
+            successOverlay.classList.add('hidden');
+        }, 5000); // 5 secondes
+    }
+}
+
+// Et assure-toi que ton gestionnaire d'événement pour le bouton "Réinitialiser la vue"
+// appelle bien cette fonction de manière asynchrone si nécessaire.
+
+//_________________________SUPABASE INTEGRATION______________________________
 
 // Variables pour le tutoriel
 let currentHighlightedElement = null;
@@ -439,10 +473,9 @@ function createBackgroundStars() {
     backgroundStars.push(stars);
 }
 
-function createDreamStars() {
-    dreamsData.forEach((dream) => {
-        createDreamStar(dream);
-    });
+async function createDreamStars() {
+    //dreamsData.forEach((dream) => { createDreamStar(dream); });
+    await loadDreams();
 }
 
 function createDreamStar(dream, isNew = false) {
@@ -860,38 +893,38 @@ function handleDreamSubmission(event) {
     const dreamInput = document.getElementById('dreamInput');
     const authorInput = document.getElementById('authorInput');
 
-    if (!dreamInput) return;
+    if (!dreamInput || !dreamInput.value.trim()) return;
 
     const dreamText = dreamInput.value.trim();
     const authorName = authorInput ? (authorInput.value.trim() || labels[currentLanguage].anonymous || 'Anonyme') : 'Anonyme';
-
-    if (!dreamText) return;
 
     // Hide form
     hideDreamForm();
 
     // Create new dream data
-    const newDream = {
-        id: dreamsData.length + 1,
-        dream: dreamText,
-        author: authorName,
-        x: (Math.random() - 0.5) * 8,
-        y: (Math.random() - 0.5) * 8,
-        z: (Math.random() - 0.5) * 8,
-        color: getRandomColor()
-    };
+
+    ///    const newDream = {
+    // id: dreamsData.length + 1,
+    // dream: dreamText,
+    // author: authorName,
+    // x: (Math.random() - 0.5) * 8,
+    // y: (Math.random() - 0.5) * 8,
+    // z: (Math.random() - 0.5) * 8,
+    // color: getRandomColor()
+    // };
+    addDreamToAtlas(dreamText, authorName);
 
     // Add to dreams data
-    dreamsData.push(newDream);
+    //dreamsData.push(newDream);
 
     // Create animated star (brighter and with particles)
-    createDreamStar(newDream, true);
+    //createDreamStar(newDream, true);
 
     // Show success message
     showSuccessMessage();
 
     // Log for debugging
-    console.log('New dream submitted:', newDream);
+    console.log('New dream submission triggered for: ', dreamText);
 }
 
 function getRandomColor() {
@@ -910,7 +943,8 @@ function showSuccessMessage() {
 
         setTimeout(() => {
             successMessage.classList.add('hidden');
-        }, 3000);
+        }, 5000);
+        //Temps d'apparition du message de soumission de success
     }
 }
 
@@ -957,6 +991,19 @@ function updateLanguageUI() {
     });
 }
 
+function disableAllButtonsExceptTutorial() {
+    // Sélectionne tous les boutons sauf ceux du tutoriel
+    document.querySelectorAll('button:not(.tutorial-btn)').forEach(btn => {
+        btn.classList.add('button-disabled-during-tutorial');
+    });
+}
+
+function enableAllButtons() {
+    document.querySelectorAll('.button-disabled-during-tutorial').forEach(btn => {
+        btn.classList.remove('button-disabled-during-tutorial');
+    });
+}
+
 function showTutorial() {
     tutorialStep = 0;
     updateTutorialStep();
@@ -964,6 +1011,7 @@ function showTutorial() {
     if (tutorialOverlay) {
         tutorialOverlay.classList.remove('hidden');
     }
+    disableAllButtonsExceptTutorial();
 }
 
 function updateTutorialStep() {
@@ -984,6 +1032,11 @@ function updateTutorialStep() {
     // Réinitialiser la position de la carte
     tutorialCard.className = 'tutorial-card';
 
+    const headerElement = document.querySelector('.header');
+    if (headerElement) {
+        headerElement.style.zIndex = '50'; // Retour à la valeur normale
+    }
+
     // S'assurer que les contrôles ne sont pas bloqués pendant le tutoriel
     if (controls) {
         controls.enabled = true;
@@ -994,12 +1047,17 @@ function updateTutorialStep() {
         renderer.domElement.style.pointerEvents = 'auto';
     }
 
-
     // Faire en sorte que l'overlay ne bloque pas les interactions 3D
     if (tutorialOverlay) {
         tutorialOverlay.style.pointerEvents = 'none';
         tutorialCard.style.pointerEvents = 'auto';
     }
+
+    // Réinitialise le z-index des instructions à chaque étape
+    document.querySelectorAll('.instructions').forEach(el => {
+        el.style.zIndex = '';
+        //el.style.position = '';
+    });
 
     switch (tutorialStep) {
         case 0:
@@ -1007,18 +1065,29 @@ function updateTutorialStep() {
             tutorialDescription.textContent = labels[currentLanguage].tutorialDescription;
             break;
         case 1:
+            if (headerElement) {
+                headerElement.style.zIndex = '105';
+            }
             tutorialTitle.textContent = labels[currentLanguage].tutorialStep2Title || "Ajouter un rêve";
             tutorialDescription.textContent = labels[currentLanguage].tutorialStep2Desc || "Cliquez sur le bouton 'Ajouter mon rêve' pour partager votre propre rêve avec la communauté.";
             highlightElement('#addDreamBtn');
             tutorialCard.classList.add('positioned-left');
             break;
         case 2:
+            if (headerElement) {
+                headerElement.style.zIndex = '105';
+            }
             tutorialTitle.textContent = labels[currentLanguage].tutorialStep3Title || "Changer de langue";
             tutorialDescription.textContent = labels[currentLanguage].tutorialStep3Desc || "Utilisez ce bouton pour changer la langue de l'application selon vos préférences.";
             highlightElement('#languageBtn');
             tutorialCard.classList.add('positioned-left');
             break;
         case 3:
+            // Étape navigation : on met le z-index élevé sur les instructions
+            document.querySelectorAll('.instructions').forEach(el => {
+                el.style.zIndex = '105'; // au-dessus du spotlight (z-index: 101)
+                //el.style.position = 'relative';
+            });
             tutorialTitle.textContent = labels[currentLanguage].tutorialStep4Title || "Navigation";
             tutorialDescription.textContent = labels[currentLanguage].tutorialStep4Desc || "Utilisez ces commandes pour naviguer dans l'univers des rêves et découvrir les étoiles.";
             highlightElement('#instructionsPanel');
@@ -1049,6 +1118,9 @@ function highlightElement(selector) {
     spotlight.style.height = (rect.height + padding * 2) + 'px';
     spotlight.classList.remove('hidden');
 
+    // Ajoute le trou noir autour du spotlight
+    spotlight.style.boxShadow = '0 0 0 9999px rgba(0,0,0,0.8), 0 0 20px var(--stellar-gold)';
+
     // Positionner le highlight (contour doré)
     highlight.style.left = (rect.left - 5) + 'px';
     highlight.style.top = (rect.top - 5) + 'px';
@@ -1061,14 +1133,15 @@ function highlightElement(selector) {
     // Ajouter un effet de brillance temporaire à l'élément
     element.style.boxShadow = '0 0 20px var(--stellar-gold)';
     element.style.transition = 'box-shadow 0.3s ease';
-    element.style.zIndex = '104'; // Au-dessus du spotlight
-    element.style.position = 'relative';
+
+    element.style.zIndex = '105'; // Au-dessus du spotlight
+    //element.style.position = 'relative';
 
     setTimeout(() => {
         if (element.style) {
             element.style.boxShadow = '';
         }
-    }, 3000);
+    }, 4000);
 }
 
 function hideHighlight() {
@@ -1085,7 +1158,7 @@ function hideHighlight() {
     if (currentHighlightedElement && currentHighlightedElement.style) {
         currentHighlightedElement.style.boxShadow = '';
         currentHighlightedElement.style.zIndex = '';
-        currentHighlightedElement.style.position = '';
+        //currentHighlightedElement.style.position = '';
         currentHighlightedElement = null;
     }
 }
@@ -1112,6 +1185,12 @@ function finishTutorial() {
     }
     hideHighlight();
     setStorageItem('dreamAtlasTutorialSeen', 'true');
+    enableAllButtons();
+
+    const headerElement = document.querySelector('.header');
+    if (headerElement) {
+        headerElement.style.zIndex = '50';
+    }
 
     // Ajout pour s'assurer que les contrôles sont réactivés
     if (controls) {

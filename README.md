@@ -14,7 +14,7 @@ Atlas des Rêves est une expérience web interactive et immersive qui vous invit
 - **Three.js** : rendu 3D temps réel dans le navigateur.
 - **JavaScript Vanilla** : logique de l'application, interactions, gestion des données.
 - **HTML5 & CSS3** : structure, design responsive et animations cosmiques.
-- **Aucune dépendance serveur** : tout fonctionne côté client, les rêves sont stockés en mémoire locale.
+- **Aucune dépendance serveur** : tout fonctionne côté client. La persistance des rêves est gérée via le stockage local du navigateur (localStorage), garantissant la disponibilité des données sans nécessiter de backend
 
 ## Fonctionnalités principales
 
@@ -22,7 +22,7 @@ Atlas des Rêves est une expérience web interactive et immersive qui vous invit
 - Ajout de votre propre rêve (sous forme d'étoile personnalisée).
 - Découverte des rêves des autres en cliquant sur les étoiles.
 - Tutoriel interactif au premier lancement et lors du changement de langue.
-- Interface multilingue (français, anglais, allemand).
+- Interface multilingue (français, anglais, allemand, etc).
 - Interface responsive et accessible.
 
 ## Utilisation du site
@@ -43,9 +43,8 @@ Atlas des Rêves est une expérience web interactive et immersive qui vous invit
 
 ## Lancer le projet
 
-Ouvrez simplement le fichier `index.html` dans votre navigateur moderne (Chrome, Firefox, Edge, etc.).
-Aucune installation n'est nécessaire.
+Après avoir cloné le projet et navigué dans le repertoire, ouvrez simplement le fichier `index.html` dans votre navigateur moderne (Chrome, Firefox, Edge, etc.).
 
 ---
 
-*Projet personnel réalisé par Mathias, 2025.*
+*Projet réalisé par Mathias Essowaza ALEDI , 2025.*
