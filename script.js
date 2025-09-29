@@ -18,18 +18,13 @@ let dragOffset = { x: 0, y: 0 };
 
 //_________________________SUPABASE INTEGRATION______________________________
 // --- CONFIGURATION SUPABASE ---
-const SUPABASE_URL = 'https://adtoywryjsxykkzphspq.supabase.co'; // Ex: https://abcdefghijklmn.supabase.co
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFkdG95d3J5anN4eWtrenBoc3BxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMDczNzIsImV4cCI6MjA3NDY4MzM3Mn0.wqJ-vqjQWUoY9GTa_tTpJsWKv2nLLQF5v9kO-uxnsio'; // Ex: eyJhbGc...
-const supabase = window.supabase; // On l'initialise plus tard
+const SUPABASE_URL = 'SUPABASE_URL'; // Ex: https://abcdefghijklmn.supabase.co
+const SUPABASE_ANON_KEY = 'SUPABASE_ANON_KEY'; // Ex: eyJhbGc...
+const supabase = window.supabase;
 // --- FIN CONFIGURATION SUPABASE ---
 
 // --- [Clean Architecture] COUCHE SERVICE DE STOCKAGE ---
 
-/**
- * Interface/Abstraction pour le stockage des rêves.
- * Tous les services concrets doivent implémenter ces méthodes.
- * Elles sont toutes asynchrones pour préparer l'intégration Supabase.
- */
 class DreamStorageService {
     async getDreams() {
         throw new Error("La méthode 'getDreams()' doit être implémentée.");
@@ -44,10 +39,6 @@ class DreamStorageService {
     }
 }
 
-/**
- * Implémentation concrète utilisant localStorage (pour maintenir la logique actuelle).
- * Ceci simule l'asynchronisme d'une requête API.
- */
 class LocalDreamStorageService extends DreamStorageService {
     constructor(storageKey = 'dreams') {
         super();
@@ -80,10 +71,7 @@ class LocalDreamStorageService extends DreamStorageService {
         });
     }
 }
-/**
- * Implémentation concrète utilisant Supabase pour la persistance des données.
- * Ceci remplace LocalDreamStorageService une fois que le client est configuré.
- */
+
 class SupabaseDreamStorageService extends DreamStorageService {
     constructor(url, anonKey, tableName = 'dreams') {
         super();
@@ -94,25 +82,20 @@ class SupabaseDreamStorageService extends DreamStorageService {
     async getDreams() {
         console.log("Fetching dreams from Supabase...");
 
-        // Assure-toi que ces noms de colonnes sont exacts dans ta table Supabase !
         const { data, error } = await this.supabase
             .from(this.tableName)
-            .select('id, dream_text, author_name, pos_x, pos_y, pos_z, star_color'); // <-- VÉRIFIE LES NOMS ICI
+            .select('id, dream_text, author_name, pos_x, pos_y, pos_z, star_color'); 
 
         if (error) {
             console.error('Supabase fetch error:', error);
             return [];
         }
 
-        // MAPPING CRUCIAL : Transformation du format DB vers le format App
         const mappedDreams = data.map(dbDream => ({
             id: dbDream.id,
             text: dbDream.dream_text,
             author: dbDream.author_name,
-
-            // C'est la LIGNE LA PLUS IMPORTANTE :
-            color: dbDream.star_color, // La colonne DB star_color doit être mappée vers la propriété App 'color'
-
+            color: dbDream.star_color, 
             position: {
                 x: dbDream.pos_x,
                 y: dbDream.pos_y,
@@ -157,35 +140,16 @@ class SupabaseDreamStorageService extends DreamStorageService {
     // Le clearing n'est généralement pas permis en production sur une base publique, 
     // mais on maintient la fonction pour l'interface :
     async clearAllDreams() {
-        // Attention : Supabase RLS devrait empêcher cette opération pour un utilisateur public !
-        // Pour des raisons de sécurité, cette fonction devrait être réservée à un admin.
-        // Pour l'instant, on la laisse vide ou on renvoie une erreur si tu la laisses publique.
+
         console.warn("La fonction 'clearAllDreams' est désactivée pour des raisons de sécurité Supabase.");
         return { success: false, message: "Opération non autorisée." };
     }
 }
-// ----------------------------------------------------
-// INSTANCIATION : C'EST LA SEULE LIGNE À CHANGER POUR PASSER À SUPABASE !
-// ----------------------------------------------------
-// Utilise le stockage local pour le moment
-// NOUVELLE VERSION :
+
 const dreamStorageService = new SupabaseDreamStorageService(SUPABASE_URL, SUPABASE_ANON_KEY, 'dreams');
 
-
-/**
- * @TODO: Une fois Supabase configuré, tu remplaceras la ligne ci-dessus par :
- * const dreamStorageService = new SupabaseDreamStorageService(); 
- * (après avoir créé cette nouvelle classe d'implémentation, bien sûr !)
- */
-
 // --- FIN: COUCHE SERVICE DE STOCKAGE ---
-// Remplace l'ancienne implémentation
 async function addDreamToAtlas(dreamText, authorName) {
-    // ... (Le code existant pour générer la position, la couleur, etc. reste ici) ...
-    // NOTE : Assure-toi que la variable 'dream' utilisée ci-dessous contient bien
-    // toutes les données nécessaires (position, texte, auteur, etc.).
-
-    // Exemple d'objet de rêve (à adapter selon ta structure actuelle)
     const dream = {
         text: dreamText,
         author: authorName || labels[currentLanguage].anonymous,
@@ -221,13 +185,9 @@ async function addDreamToAtlas(dreamText, authorName) {
         // Tu peux ajouter ici une logique pour notifier l'utilisateur de l'échec
     }
 }
-// Remplace l'ancienne implémentation
 async function loadDreams() {
     try {
-        // !!! MODIFICATION CLÉ !!! : Utilisation du service asynchrone
         const dreams = await dreamStorageService.getDreams();
-
-        // Le reste de ta logique de chargement reste intact.
         dreams.forEach(dream => {
             //createNewDreamStar(dream);
             const flatDream = {
@@ -246,31 +206,22 @@ async function loadDreams() {
         console.error("Erreur lors du chargement des rêves:", error);
     }
 }
-// Si tu as une fonction 'clearDreams' ou 'resetDreams' :
 async function clearDreams() {
     try {
         await dreamStorageService.clearAllDreams();
-        // ... (Logique existante pour supprimer les étoiles de la scène THREE.js) ...
     } catch (error) {
         console.error("Erreur lors de la suppression des rêves:", error);
     }
 }
-// DANS script.js (Ajoute ceci quelque part où elle sera globale)
 function displaySuccessMessage() {
     const successOverlay = document.getElementById('successOverlay');
     if (successOverlay) {
         successOverlay.classList.remove('hidden');
-
-        // Optionnel : masquer après quelques secondes
         setTimeout(() => {
             successOverlay.classList.add('hidden');
         }, 5000); // 5 secondes
     }
 }
-
-// Et assure-toi que ton gestionnaire d'événement pour le bouton "Réinitialiser la vue"
-// appelle bien cette fonction de manière asynchrone si nécessaire.
-
 //_________________________SUPABASE INTEGRATION______________________________
 
 // Variables pour le tutoriel
@@ -1004,26 +955,8 @@ function handleDreamSubmission(event) {
     // Hide form
     hideDreamForm();
 
-    // Create new dream data
-
-    ///    const newDream = {
-    // id: dreamsData.length + 1,
-    // dream: dreamText,
-    // author: authorName,
-    // x: (Math.random() - 0.5) * 8,
-    // y: (Math.random() - 0.5) * 8,
-    // z: (Math.random() - 0.5) * 8,
-    // color: getRandomColor()
-    // };
     addDreamToAtlas(dreamText, authorName);
 
-    // Add to dreams data
-    //dreamsData.push(newDream);
-
-    // Create animated star (brighter and with particles)
-    //createDreamStar(newDream, true);
-
-    // Show success message
     showSuccessMessage();
 
     // Log for debugging
@@ -1188,8 +1121,7 @@ function updateTutorialStep() {
         case 3:
             // Étape navigation : on met le z-index élevé sur les instructions
             document.querySelectorAll('.instructions').forEach(el => {
-                el.style.zIndex = '105'; // au-dessus du spotlight (z-index: 101)
-                //el.style.position = 'relative';
+                el.style.zIndex = '105'; 
             });
             tutorialTitle.textContent = labels[currentLanguage].tutorialStep4Title || "Navigation";
             tutorialDescription.textContent = labels[currentLanguage].tutorialStep4Desc || "Utilisez ces commandes pour naviguer dans l'univers des rêves et découvrir les étoiles.";
@@ -1261,7 +1193,6 @@ function hideHighlight() {
     if (currentHighlightedElement && currentHighlightedElement.style) {
         currentHighlightedElement.style.boxShadow = '';
         currentHighlightedElement.style.zIndex = '';
-        //currentHighlightedElement.style.position = '';
         currentHighlightedElement = null;
     }
 }
