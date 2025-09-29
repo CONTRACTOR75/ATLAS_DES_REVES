@@ -25,6 +25,8 @@
     /* Animations */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-star: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    --african-pattern: url('assets/pagne.jpg');
 }
 
 * {
@@ -60,6 +62,164 @@ body {
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
+}
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.08; /* Très subtil */
+    background-image: var(--african-pattern);
+    background-size: 200px; /* Ajustez selon votre motif */
+    background-repeat: repeat;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* About Button */
+.about-container {
+    position: fixed;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    z-index: 40;
+}
+
+.about-btn {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    background: rgba(34, 40, 49, 0.9);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--cosmic-light);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+}
+
+.question-mark {
+    font-size: 1.5rem;
+    color: var(--stellar-gold);
+    font-weight: bold;
+    animation: twinkle 3s ease-in-out infinite;
+}
+
+.about-hover-text {
+    position: absolute;
+    right: 60px;
+    white-space: nowrap;
+    color: white;
+    background: rgba(34, 40, 49, 0.95);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--cosmic-light);
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--transition-smooth);
+}
+
+.about-btn:hover .about-hover-text {
+    opacity: 1;
+}
+
+.about-btn:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-glow);
+}
+
+#aboutButtonHover {
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--cosmic-light);
+    box-shadow: var(--shadow-glow);
+}
+
+.about-panel {
+    position: fixed;
+    top: 50%;
+    right: 80px;
+    width: 20em;
+    transform: translateY(-50%);
+    background: rgba(34, 40, 49, 0.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--cosmic-light);
+    box-shadow: var(--shadow-glow);
+    border-radius: 16px;
+    padding: 1.5rem;
+    max-width: 400px;
+    z-index: 45;
+    animation: slide-in-left 0.3s ease-out;
+}
+
+.about-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.05;
+    background-image: var(--african-pattern);
+    background-size: 150px;
+    border-radius: 16px;
+    pointer-events: none;
+}
+
+.about-content h3 {
+    color: var(--stellar-gold);
+    margin-bottom: 1rem;
+}
+
+.about-content p {
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    color: var(--foreground);
+}
+
+.about-proverb {
+    font-style: italic;
+    color: var(--muted-foreground);
+    border-left: 3px solid var(--stellar-gold);
+    padding-left: 1rem;
+    margin: 1rem 0 0 0;
+}
+
+@keyframes slide-in-left {
+    from {
+        transform: translateY(-50%) translateX(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(-50%) translateX(0);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-container {
+        top: auto;
+        bottom: 5rem;
+        right: 0.5rem;
+    }
+    
+    .about-panel {
+        position: fixed;
+        top: auto;
+        bottom: 8rem;
+        left : auto ;
+        right : 90%;
+        transform: none;
+        max-width: none;
+    }
+    .about-btn {
+        bottom: 8em; 
+    }
+
 }
 
 .header-title {
@@ -122,6 +282,66 @@ body {
     min-width: 120px;
     display: none;
     z-index: 100;
+    max-height: 250px; /* Environ 5 options * 50px */
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.language-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+.language-dropdown::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+}
+
+.language-dropdown::-webkit-scrollbar-thumb {
+    background: var(--stellar-gold);
+    border-radius: 3px;
+    transition: var(--transition-smooth);
+}
+
+.language-dropdown::-webkit-scrollbar-thumb:hover {
+    background: var(--nebula-pink);
+}
+/* Pour Firefox */
+.language-dropdown {
+    scrollbar-width: thin;
+    scrollbar-color: var(--stellar-gold) rgba(255, 255, 255, 0.05);
+}
+
+.language-dropdown.show {
+    display: block;
+}
+
+.language-option {
+    padding: 0.75rem 0.5rem; /* Hauteur confortable pour 5 options */
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    white-space: nowrap; /* Évite le retour à la ligne */
+}
+
+.language-option:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Indicateur visuel qu'il y a plus de contenu en bas */
+.language-dropdown::after {
+    content: '';
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(to top, rgba(34, 40, 49, 0.95), transparent);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* Afficher l'indicateur seulement si le contenu déborde */
+.language-dropdown.has-scroll::after {
+    opacity: 1;
 }
 
 .language-dropdown.show {
@@ -260,6 +480,22 @@ body {
     padding: 0.25rem;
     border-radius: 4px;
     transition: var(--transition-smooth);
+}
+
+.instructions::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.05;
+    background-image: var(--african-pattern);
+    background-size: 150px;
+    background-repeat: repeat;
+    border-radius: 12px;
+    pointer-events: none;
+    z-index: -1;
 }
 
 .instructions-toggle:hover {
@@ -837,13 +1073,14 @@ body {
     .language-dropdown {
         position: absolute;
         right: auto;
-        left: 90%;
-        margin-right: 0.5rem; 
+        left: 5em;
+        margin-right: 0.5rem;
         top: 100%;
         transform: translateX(-50%);
         margin-top: 0.5rem;
         min-width: 140px;
-
+        max-width: 90vw;
+        max-height: 200px;
     }
 
     .instructions {
@@ -863,7 +1100,7 @@ body {
     .instructions h3 {
         font-size: 0.875rem;
     }
-    
+
     .reset-view-btn {
         bottom: 0.5rem;
         left: 0.5rem;
@@ -894,3 +1131,4 @@ body {
     opacity: 0.5 !important;
     filter: grayscale(0.5);
 }
+

@@ -33,7 +33,22 @@
                         <span>▼</span>
                     </button>
                     <div id="languageDropdown" class="language-dropdown">
+                        <div class="language-option" data-lang="ewe">Ewe</div>
+                        <div class="language-option" data-lang="min">Mina</div>
+                        <div class="language-option" data-lang="sw">Kiswahili</div>
+                        <div class="language-option" data-lang="twi">Ashanti</div>
+                        <div class="language-option" data-lang="wo">Wolof</div>
+                        <div class="language-option" data-lang="yo">Yoruba</div>
+                        <div class="language-option" data-lang="bm">Bambara</div>
+                        <div class="language-option" data-lang="ig">Igbo</div>
+                        <div class="language-option" data-lang="ff">Peul /Fulfulde </div>
                         <div class="language-option" data-lang="fr">Français</div>
+                        <div class="language-option" data-lang="it">Italiano</div>
+                        <div class="language-option" data-lang="pt_br">Portugais Bresilien</div>
+                        <div class="language-option" data-lang="es">Español</div>
+                        <div class="language-option" data-lang="zh">Chinois Simplifié</div>
+                        <div class="language-option" data-lang="ja">Japonais</div>
+                        <div class="language-option" data-lang="ar">Arabe</div>
                         <div class="language-option" data-lang="en">English</div>
                         <div class="language-option" data-lang="de">Deutsch</div>
                     </div>
@@ -80,6 +95,24 @@
         <span id="resetViewText">Réinitialiser la vue</span>
     </button>
 
+    <!-- Bouton About -->
+<div class="about-container">
+    <button id="aboutBtn" class="about-btn">
+        <span class="question-mark">?</span>
+        <span id="aboutButtonHover" class="about-hover-text">À propos de l'Atlas des Rêves</span>
+    </button>
+    
+    <div id="aboutPanel" class="about-panel hidden">
+        <div class="about-content">
+            <h3 id="aboutTitle">L'inspiration africaine</h3>
+            <p id="aboutText">En Afrique, les rêves sont considérés comme des messages ancestraux...</p>
+            <blockquote id="aboutProverb" class="about-proverb">
+                « Un rêve n'est pas qu'un rêve... »
+            </blockquote>
+        </div>
+    </div>
+</div>
+
     <!-- Dream Popup -->
     <div id="dreamPopup" class="dream-popup hidden">
         <div class="dream-popup-content">
@@ -117,12 +150,12 @@
             <form id="dreamSubmissionForm" class="dream-form-body">
                 <div class="form-group">
                     <label for="dreamInput" id="dreamLabel">Votre rêve</label>
-                    <textarea id="dreamInput" name="dream" placeholder="Décrivez votre rêve en quelques phrases..."
+                    <textarea id="dreamInputPlaceholder" name="dream" placeholder="Décrivez votre rêve en quelques phrases..."
                         required></textarea>
                 </div>
                 <div class="form-group">
                     <label for="authorInput" id="authorLabel">Votre nom (optionnel)</label>
-                    <input type="text" id="authorInput" name="author" placeholder="Votre pseudonyme">
+                    <input type="text" id="authorInputPlaceholder" name="author" placeholder="Votre pseudonyme">
                 </div>
                 <button type="submit" class="submit-btn">
                     <span id="submitDreamText">🌟 Envoyer mon rêve vers les étoiles</span>

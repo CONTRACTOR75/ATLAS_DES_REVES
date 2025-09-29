@@ -321,7 +321,7 @@ function init() {
         // Set language based on browser preference if first visit
         if (!getStorageItem('dreamAtlasLanguage')) {
             const browserLang = navigator.language.split('-')[0];
-            if (['fr', 'en', 'de'].includes(browserLang)) {
+            if (['fr', 'en', 'de','sw', 'twi','min','ewe','wo','yo','bm','ig','ff','pt_br','it','es','zh','ja','ar'].includes(browserLang)) {
                 currentLanguage = browserLang;
             } else {
                 currentLanguage = 'en';
@@ -471,6 +471,24 @@ function createBackgroundStars() {
     const stars = new THREE.Points(starsGeometry, starsMaterial);
     scene.add(stars);
     backgroundStars.push(stars);
+}
+
+function toggleLanguageDropdown() {
+    const dropdown = document.getElementById('languageDropdown');
+    if (dropdown) {
+        dropdown.classList.toggle('show');
+        
+        // Détecter si le contenu déborde (pour l'indicateur)
+        if (dropdown.classList.contains('show')) {
+            setTimeout(() => {
+                if (dropdown.scrollHeight > dropdown.clientHeight) {
+                    dropdown.classList.add('has-scroll');
+                } else {
+                    dropdown.classList.remove('has-scroll');
+                }
+            }, 50);
+        }
+    }
 }
 
 async function createDreamStars() {
@@ -676,6 +694,29 @@ function setupEventListeners() {
             }
         }
     });
+    // Dans setupEventListeners()
+const aboutBtn = document.getElementById('aboutBtn');
+const aboutBtnText = document.getElementById('aboutButtonHover');
+if (aboutBtn) {
+    aboutBtn.addEventListener('click', showAboutPanel);
+    aboutBtn.addEventListener('mouseleave', hideAboutPanel);
+}
+
+function showAboutPanel() {
+    const aboutPanel = document.getElementById('aboutPanel');
+    if (aboutPanel) {
+        aboutPanel.classList.remove('hidden');
+        aboutBtnText.classList.add('hidden');
+    }
+}
+
+function hideAboutPanel() {
+    const aboutPanel = document.getElementById('aboutPanel');
+    if (aboutPanel) {
+        aboutPanel.classList.add('hidden');
+        aboutBtnText.classList.remove('hidden');
+    }
+}
 }
 
 // Système de déplacement des instructions
@@ -837,6 +878,13 @@ function resetView() {
 }
 
 function onKeyDown(event) {
+    const activeElement = document.activeElement;
+    const isInputActive = activeElement.tagName === 'TEXTAREA' || 
+                        activeElement.tagName === 'INPUT';
+    
+    if (isInputActive) {
+        return; // Laisser l'input gérer la touche normalement
+    }
     if (!controls || !camera) return;
 
     // Improved keyboard controls
