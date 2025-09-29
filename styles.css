@@ -835,21 +835,35 @@ body {
     }
 
     .language-dropdown {
-        /* On remplace right: 0; par left: auto; et on ajuste le right */
-        right: 0; /* Alignement par défaut à droite */
-        left: auto;
-        /* Ajout d'une petite marge pour ne pas coller au bord */
+        position: absolute;
+        right: auto;
+        left: 90%;
         margin-right: 0.5rem; 
+        top: 100%;
+        transform: translateX(-50%);
+        margin-top: 0.5rem;
+        min-width: 140px;
+
     }
 
     .instructions {
         bottom: 0.5rem;
         right: 0.5rem;
-        left: 0.5rem;
+        left: auto;
         min-width: auto;
+        max-width: calc(100vw - 1rem);
         margin-bottom: 3rem;
     }
 
+    /* Réduire la taille du texte sur petit écran */
+    .instructions ul {
+        font-size: 0.75rem;
+    }
+
+    .instructions h3 {
+        font-size: 0.875rem;
+    }
+    
     .reset-view-btn {
         bottom: 0.5rem;
         left: 0.5rem;

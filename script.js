@@ -695,6 +695,61 @@ function setupInstructionsDrag() {
     document.addEventListener('touchend', endDrag);
 }
 
+// Fonction pour forcer le panel à rester dans l'écran
+function constrainPanelToScreen() {
+    const instructionsPanel = document.getElementById('instructionsPanel');
+    if (!instructionsPanel) return;
+
+    const rect = instructionsPanel.getBoundingClientRect();
+    const maxX = window.innerWidth - rect.width;
+    const maxY = window.innerHeight - rect.height;
+
+    let needsAdjustment = false;
+    let newX = rect.left;
+    let newY = rect.top;
+
+    // Vérifier si le panel sort à droite
+    if (rect.right > window.innerWidth) {
+        newX = maxX - 16; // 16px de marge
+        needsAdjustment = true;
+    }
+
+    // Vérifier si le panel sort en bas
+    if (rect.bottom > window.innerHeight) {
+        newY = maxY - 16;
+        needsAdjustment = true;
+    }
+
+    // Vérifier si le panel sort à gauche
+    if (rect.left < 0) {
+        newX = 16;
+        needsAdjustment = true;
+    }
+
+    // Vérifier si le panel sort en haut
+    if (rect.top < 80) { // 80px pour éviter le header
+        newY = 96; // 80px header + 16px marge
+        needsAdjustment = true;
+    }
+
+    // Appliquer les corrections si nécessaire
+    if (needsAdjustment) {
+        instructionsPanel.style.left = newX + 'px';
+        instructionsPanel.style.top = newY + 'px';
+        instructionsPanel.style.right = 'auto';
+        instructionsPanel.style.bottom = 'auto';
+    }
+}
+
+// Ajouter un écouteur de redimensionnement
+let resizeTimer;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+        constrainPanelToScreen();
+    }, 100);
+});
+
 function startDrag(e) {
     isDragging = true;
     const instructionsPanel = document.getElementById('instructionsPanel');
@@ -1201,7 +1256,6 @@ function finishTutorial() {
     }
 }
 
-
 function onWindowResize() {
     if (!camera || !renderer) return;
 
@@ -1212,6 +1266,7 @@ function onWindowResize() {
     if (controls) {
         controls.update();
     }
+    constrainPanelToScreen();
 }
 
 function animate() {
