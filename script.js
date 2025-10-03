@@ -16,10 +16,15 @@ let isDragging = false;
 let dragOffset = { x: 0, y: 0 };
 
 
+
 //_________________________SUPABASE INTEGRATION______________________________
 // --- CONFIGURATION SUPABASE ---
-const SUPABASE_URL = 'SUPABASE_URL'; // Ex: https://abcdefghijklmn.supabase.co
-const SUPABASE_ANON_KEY = 'SUPABASE_ANON_KEY'; // Ex: eyJhbGc...
+//Retour sur les variables personnelles pour rendre le site fonctionnel
+const SUPA_URL ='https://adtoywryjsxykkzphspq.supabase.co' ;
+const SUPA_KEY ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFkdG95d3J5anN4eWtrenBoc3BxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMDczNzIsImV4cCI6MjA3NDY4MzM3Mn0.wqJ-vqjQWUoY9GTa_tTpJsWKv2nLLQF5v9kO-uxnsio' ;
+//à remplacer par d'autres valeurs si vous voulez changer de base de données
+const SUPABASE_URL = SUPA_URL ; // Ex: https://abcdefghijklmn.supabase.co
+const SUPABASE_ANON_KEY = SUPA_KEY ; // Ex: eyJhbGc...
 const supabase = window.supabase;
 // --- FIN CONFIGURATION SUPABASE ---
 
